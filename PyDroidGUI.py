@@ -210,27 +210,21 @@ version = "1.0-7"
 
 # ================= Beginning of Main =====================
 
-menu = [[sg.Text("PyDroid is an Android Platform-Tools UI")],
+menu = [
 		[sg.Image("logo.png")],
-		[sg.Text("\n")],
 		[sg.Button("Check for Updates"), sg.Button("Reinstall Platform-Tools")],
 		[sg.Text("\n" * 1 )],
-		[sg.Text("Current Android Device: ")],
 		[sg.Image("device.png"), sg.Text(device_search(),  key="refresh", visible=True ), sg.Text("        "),  sg.Button("Refresh", key="search")],
-
-
 		]
 
-
-opciones = [[sg.Text("Choose one of the following options :\n")],
+opciones = [
 			[sg.Button('Search for ADB Devices', size=(18,2), key="opt1"), sg.Text(""), sg.Button("Search for Fastboot Devices", size=(18,2))],
 			[sg.Button('Android Device Logcat', size=(18,2)), sg.Text(""), sg.Button("Flash a Generic System Image", size=(18,2))],
 			[sg.Button('Unlock Android Device Bootloader', size=(18,2)), sg.Text(""), sg.Button("Uninstall Android App", size=(18,2))],
 			[sg.Button('Install Android App', size=(18,2)), sg.Text(""), sg.Button("Android Device Backup", size=(18,2))],
 			[sg.Button('Backup Current boot.img', size=(18,2)), sg.Text(""), sg.Button("Send file over ADB", size=(18,2))],
 			[sg.Button('Sideload OTA file', size=(18,2)), sg.Text(""), sg.Button("Modify Current DPI", size=(18,2))],
-]
-
+			]
 
 layout = [
 	[
@@ -238,7 +232,7 @@ layout = [
 		sg.VSeperator(),
 		sg.Column(opciones),
 	]
-]
+		]
 
 
 adb = [[sg.Text("Searching for ADB devices...")],
