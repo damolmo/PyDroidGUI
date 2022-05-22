@@ -247,6 +247,7 @@ adb = [[sg.Text("Searching for ADB devices...")],
 		]
 
 window = sg.Window("PyDroidGUI", layout)
+window.set_icon("icon.png")
 
 
 while True :
