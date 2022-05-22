@@ -205,32 +205,30 @@ ota_package = "android_ota.zip"
 # Other variables
 DATE_FORMAT = '%y%m%d'
 user = 0 # For keyboard input 
-version = "1.0-7"
+version = "1.0"
 # ==================== End of variables ===================
 
 # ================= Beginning of Main =====================
 
 menu = [
-		[sg.Image("logo.png")],
-		[sg.Button("Check for Updates"), sg.Button("Reinstall Platform-Tools")],
-		[sg.Text("\n" * 1 )],
-		[sg.Image("device.png"), sg.Text(device_search(),  key="refresh", visible=True ), sg.Text("        "),  sg.Button("Refresh", key="search")],
+		[sg.Image("src/logo.png", background_color='#4285f4'), sg.Text("v" + version, size=(5), background_color='#4285f4')],
+		[sg.Button("Check for Updates", font='7', button_color='#3ddc84'), sg.Button("Reinstall Platform-Tools",button_color='#3ddc84', font='7')],
+		[sg.Text("\n" * 1, background_color='#4285f4' )],
+		[sg.Image("device.png",  background_color='#4285f4'), sg.Text(device_search(), background_color='#4285f4',  key="refresh", visible=True ), sg.Text("        ", background_color='#4285f4'),  sg.Button("Refresh", key="search", button_color='#3ddc84', font='7')],
 		]
 
 opciones = [
-			[sg.Button('Search for ADB Devices', size=(18,2), key="opt1"), sg.Text(""), sg.Button("Search for Fastboot Devices", size=(18,2))],
-			[sg.Button('Android Device Logcat', size=(18,2)), sg.Text(""), sg.Button("Flash a Generic System Image", size=(18,2))],
-			[sg.Button('Unlock Android Device Bootloader', size=(18,2)), sg.Text(""), sg.Button("Uninstall Android App", size=(18,2))],
-			[sg.Button('Install Android App', size=(18,2)), sg.Text(""), sg.Button("Android Device Backup", size=(18,2))],
-			[sg.Button('Backup Current boot.img', size=(18,2)), sg.Text(""), sg.Button("Send file over ADB", size=(18,2))],
-			[sg.Button('Sideload OTA file', size=(18,2)), sg.Text(""), sg.Button("Modify Current DPI", size=(18,2))],
+			[sg.Button('Search for ADB Devices', button_color='#3ddc84', font='5', size=(18,2), key="opt1"), sg.Button("Search for Fastboot Devices", button_color='#3ddc84', font='7', size=(18,2)),sg.Button('Android Device Logcat', button_color='#3ddc84', font='7', size=(18,2))],
+			[sg.Button('Flash a Generic System Image', button_color='#3ddc84', font='5', size=(18,2), key="opt1"),sg.Button("Unlock Android Device Bootloader", button_color='#3ddc84', font='7', size=(18,2)),sg.Button('Uninstall Android App', button_color='#3ddc84', font='7', size=(18,2))],
+			[sg.Button('Install Android App', button_color='#3ddc84', font='5', size=(18,2), key="opt1"), sg.Button("Android Device Backup", button_color='#3ddc84', font='7', size=(18,2)),sg.Button('Backup Current boot.img', button_color='#3ddc84', font='7', size=(18,2))],
+			[sg.Button('Send file over ADB', button_color='#3ddc84', font='5', size=(18,2), key="opt1"), sg.Button("Sideload OTA file", button_color='#3ddc84', font='7', size=(18,2)),sg.Button('Modify Current DPI', button_color='#3ddc84', font='7', size=(18,2))],
 			]
 
 layout = [
 	[
-		sg.Column(menu),
+		sg.Column(menu, background_color='#4285f4'),
 		sg.VSeperator(),
-		sg.Column(opciones),
+		sg.Column(opciones,background_color='#4285f4' ),
 	]
 		]
 
@@ -240,8 +238,9 @@ adb = [[sg.Text("Searching for ADB devices...")],
 		[sg.Text("\n" * 2 )],
 		]
 
-window = sg.Window("PyDroidGUI", layout)
-window.set_icon("icon.png")
+window = sg.Window("PyDroidGUI", layout,background_color='#4285f4')
+window.set_icon("src/icon.png")
+
 
 
 while True :
