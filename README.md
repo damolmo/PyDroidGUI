@@ -24,6 +24,6 @@ To get started, paste the following command into your Windows cmd/PowerShell
 ```
 git clone -b https://github.com/daviiid99/PyDroidGUI.git PyDroid
 cd PyDroidGUI
-python3 Main.py
+python3 PySimpleGUI.py
 ```
 <br/>
