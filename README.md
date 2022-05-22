@@ -15,7 +15,7 @@
 • <a href="https://www.python.org/downloads/">Python 3.10 version or newer</a><br/>
 
 # Status
-Just a demostration of how PyDroid would look like with an user interface.</br>
+Just a demostration to show how PyDroid would look like with an user interface.</br>
 Most of the functionalities from PyDroid aren't implemented yet
 
 # Installation
