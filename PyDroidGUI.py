@@ -293,20 +293,26 @@ def device_render() :
     elif render == "Motorola" or render == "motorola" :
         img_src = "src/motorola.png"
 
-    elif render == "BQ" :
+    elif render == "BQ" or render == "bq" :
         img_src = "src/bq.png"
 
-    elif render == "HTC" :
+    elif render == "HTC" or render == "htc" :
         img_src = "src/htc.png"
 
-    elif render == "LGE" :
+    elif render == "LGE" or render == "lge" :
         img_src = "src/lge.png"
 
-    elif render == "ZTE" :
+    elif render == "ZTE" or render == "zte" :
         img_src = "src/zte.png"
 
-    elif render == "OPPO" :
+    elif render == "OPPO" or render == "oppo" :
         img_src = "src/oppo.png"
+
+    elif render == "HMD Global" or render == "hmd global" :
+        img_src = "src/nokia.png"
+
+    elif render == "Lenovo" or render == "lenovo" :
+        img_src = "src/lenovo.png"
 
 
     return img_src
@@ -325,17 +331,40 @@ def window_version(title):
     return sg.Window(title, version, background_color='#4285f4')
 
 def window_tools(title):
-    changelog = [[sg.Text("\nReinstall Android platform-tools ?", background_color='#4285f4')],
+    tools = [[sg.Text("\nReinstall Android platform-tools ?", background_color='#4285f4')],
             [sg.Button("Perform Update", button_color='#3ddc84', font='5', size=(16,2),), sg.Button("Cancel", button_color='#3ddc84', font='5', size=(16,2),)]]
 
-    return sg.Window(title, changelog, background_color='#4285f4')
+    return sg.Window(title, tools, background_color='#4285f4')
 
 def window_logcat(title):
-    changelog = [[sg.Text("\nCatch Android Device Logcat ?", background_color='#4285f4')],
+    logcat = [[sg.Text("\nCatch Android Device Logcat ?", background_color='#4285f4')],
             [sg.Button("Ok", button_color='#3ddc84', font='5', size=(16,2),), sg.Button("Cancel", button_color='#3ddc84', font='5', size=(16,2),)]]
 
-    return sg.Window(title, changelog, background_color='#4285f4')
+    return sg.Window(title, logcat, background_color='#4285f4')
 
+def window_unlock(title):
+    unlock = [[sg.Text("\n\nWARNING!!\nBootloader Unlock will ONLY work with Google Pixel\nAndroid One, Motorola and Sony Devices\n\nIf you're using an unlockable device, enable\nSettings > System > Developer Options >\nOEM unlock > Enable\n", background_color='#4285f4')],
+                [[sg.Image("src/fastboot.png", background_color='#4285f4')]],
+                [[sg.Text("\nPress VOL- + POWER to boot into FASTBOOT mode", background_color='#4285f4')]],
+                [sg.Button("Unlock Bootloader", button_color='#3ddc84', font='5', size=(16,2),), sg.Button("Cancel", button_color='#3ddc84', font='5', size=(16,2),)]]
+
+    return sg.Window(title, unlock, background_color='#4285f4')
+
+def window_boot(title):
+    boot = [[sg.Text("\nDump Android Boot.img\n\nChoose your partitions scheme ", background_color='#4285f4')],
+            [sg.Button("A-Only Partition", button_color='#3ddc84', font='5', size=(16,2),), sg.Button("A|B Partitions", button_color='#3ddc84', font='5', size=(16,2),), sg.Button("Cancel", button_color='#3ddc84', font='5', size=(16,2),)]]
+
+    return sg.Window(title, boot, background_color='#4285f4')
+
+def window_gsi(title) : 
+
+    gsi = [[sg.FileBrowse( key="-FILE-")],
+          [sg.Image()],
+          [sg.Button("Flash GSI")],
+          [sg.Button("Exit")],
+
+    ]
+    return sg.Window(title, gsi, background_color='#4285f4', finalize=True)
 
 
 def install_py(pydroid, script) :
@@ -378,8 +407,8 @@ menu = [
         [sg.Button('Android Device Logcat', button_color='#3ddc84', font='5', size=(16,2), key="opt3"), sg.Button('Android Device Backup', button_color='#3ddc84', font='5', size=(16,2), key="opt1")],
         [sg.Button('Send file over ADB', button_color='#3ddc84', font='5', size=(16,2), key="opt1"), sg.Button('Sideload OTA package', button_color='#3ddc84', font='5', size=(16,2), key="opt1")],
         [sg.Button('Install Android App', button_color='#3ddc84', font='5', size=(16,2), key="opt1"), sg.Button('Uninstall Android App', button_color='#3ddc84', font='5', size=(16,2), key="opt1")],
-        [sg.Button('Flash a Generic System Image', button_color='#3ddc84', font='5', size=(16,2), key="opt1"), sg.Button('Unlock Android Bootloader', button_color='#3ddc84', font='5', size=(16,2), key="opt1")],
-        [sg.Button('Backup Current boot.img', button_color='#3ddc84', font='5', size=(16,2), key="opt1"), sg.Button('Modify Current DPI', button_color='#3ddc84', font='5', size=(16,2), key="opt1")],
+        [sg.Button('Flash a Generic System Image', button_color='#3ddc84', font='5', size=(16,2), key="optgsi"), sg.Button('Unlock Android Bootloader', button_color='#3ddc84', font='5', size=(16,2), key="opt0")],
+        [sg.Button('Backup Current boot.img', button_color='#3ddc84', font='5', size=(16,2), key="optboot"), sg.Button('Modify Current DPI', button_color='#3ddc84', font='5', size=(16,2), key="opt1")],
         ]
 
 layout = [
@@ -433,6 +462,17 @@ while True :
 
         elif event == "Cancel" or event == sg.WIN_CLOSED:
             window_update.close()
+
+    elif event == "opt0" :
+        window_update = window_unlock("Get Android Device Logcat")
+        event, values = window_update.read()
+
+        if event == "Unlock Bootloader" :
+            os.system("cd platform-tools & fastboot flashing unlock")
+            window_update.close()
+
+        elif event == "Cancel" or event == sg.WIN_CLOSED:
+            window_update.close()
         
     elif event == "update" :
         if check_for_updates(version) == True :
@@ -442,6 +482,7 @@ while True :
             if event == "Perform Update" :
                 os.system("rm PyDroidGUI.py")
                 os.system("wget https://github.com/daviiid99/PyDroidGUI/raw/main/PyDroidGUI.py")
+                os.system("python3 PyDroidGUI.py")
                 window_update.close()
 
             elif event == "Cancel" or event == sg.WIN_CLOSED:
@@ -453,6 +494,33 @@ while True :
 
             if event == "Cancel" or event == sg.WIN_CLOSED:
                 window_update.close()
+
+    elif event == "optboot" :
+        window_update = window_boot("Get Android Device Logcat")
+        event, values = window_update.read()
+        my_device_model = model()
+        my_device_model_img = my_device_model + ".img"
+        my_device_model_img = my_device_model_img.replace("\n.img", ".img")
+
+        if event == "A-Only Partition" :
+            os.system("cd platform-tools & adb root & adb pull dev/block/bootdevice/by-name/boot boot_%s" % my_device_model_img)
+
+        elif event == "A|B Partitions" :
+            os.system("cd platform-tools & adb root & adb pull dev/block/bootdevice/by-name/boot_a boot_a_%s" % my_device_model_img)
+            os.system("cd platform-tools & adb root & adb pull dev/block/bootdevice/by-name/boot_b boot_b_%s" % my_device_model_img)
+
+        elif event == "Cancel" or event == sg.WIN_CLOSED:
+                window_update.close()
+        
+    elif event == "optgsi" :
+        window_update = window_gsi("Flash a Generic System Image")
+        event, values = window_update.read()
+
+        if event == "Flash GSI" :
+            print(values["-FILE-"])
+
+
+
 
 
 
