@@ -22,7 +22,7 @@ Most of the functionalities from PyDroid aren't implemented yet
 
 To get started, paste the following command into your Linux cmd
 ```
-git clone -b https://github.com/daviiid99/PyDroidGUI.git PyDroid
+git clone -b https://github.com/daviiid99/PyDroidGUI.git PyDroidGUI
 cd PyDroidGUI
 python3 PySimpleGUI.py
 ```
