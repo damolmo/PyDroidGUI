@@ -76,7 +76,7 @@ def check_adb_device():
         my_device_model = my_device_model.replace(" ", "")
 
     except subprocess.CalledProcessError as e:
-        my_device_model = str("No ADB device found\n")
+        my_device_model = str("unknown\n")
 
     return my_device_model
 
@@ -88,7 +88,7 @@ def check_fastboot_device():
         my_device_model = my_device_model.replace(" ", "")
 
     except subprocess.CalledProcessError as e:
-        my_device_model = str("No ADB device found\n")
+        my_device_model = str("unknown\n")
 
     return my_device_model
 
@@ -202,13 +202,13 @@ def device_search():
     my_adb_model = check_adb_device()
     my_fastboot_model = check_fastboot_device()
 
-    if my_adb_model == "No ADB device found" and my_fastboot_model == "No ADB device found" :
+    if my_adb_model == "unknown" and my_fastboot_model == "unknown" :
         my_device_model = my_adb_model
 
-    elif my_adb_model != "No ADB device found" and my_adb_model !="" :
+    elif my_adb_model != "unknown" and my_adb_model !="" :
         my_device_model = my_adb_model
 
-    elif my_fastboot_model != "No ADB device found" and my_fastboot_model !="" :
+    elif my_fastboot_model != "unknown" and my_fastboot_model !="" :
         my_device_model = my_fastboot_model
 
     else :
@@ -220,13 +220,13 @@ def model():
     my_adb_model = check_adb_device()
     my_fastboot_model = check_fastboot_device()
 
-    if my_adb_model == "No ADB device found" and my_fastboot_model == "No ADB device found" :
+    if my_adb_model == "unknown" and my_fastboot_model == "unknown" :
         my_device_model = my_adb_model
 
-    elif my_adb_model != "No ADB device found" and my_adb_model !="" :
+    elif my_adb_model != "unknown" and my_adb_model !="" :
         my_device_model = my_adb_model
 
-    elif my_fastboot_model != "No ADB device found" and my_fastboot_model !="" :
+    elif my_fastboot_model != "unknown" and my_fastboot_model !="" :
         my_device_model = my_fastboot_model
 
     else :
@@ -253,6 +253,9 @@ def battery_level() :
 
     except subprocess.CalledProcessError as e:
         level = str("unknown\n")
+
+    if "100%" in level :
+        level = "charged"
 
     return "Battery : " + level
 
@@ -396,9 +399,26 @@ def window_gsi(title) :
     ]
     return sg.Window(title, gsi, background_color='#4285f4', finalize=True)
 
+def window_control(title) : 
+
+    gsi = [[sg.Button("Reboot Recovery", button_color='#3ddc84', size=(20,2), font='5')],
+          [sg.Button("Reboot System  ", button_color='#3ddc84', size=(20,2), font='5')],
+          [sg.Button("Reboot Fastboot", button_color='#3ddc84', size=(20,2), font='5')],
+          [sg.Button("PowerOff Phone", button_color='#3ddc84', size=(20,2), font='5')],
+
+    ]
+    return sg.Window(title, gsi, background_color='#4285f4', finalize=True)
+
+
 
 def install_py(pydroid, script) :
     linux = wget.download(pydroid,script) #Download the platform-tools-latest-linux.zip from Google server
+
+def window_success(title):
+    changelog = [[sg.Text("\nOperation completed succesfully!", background_color='#4285f4')],
+            [sg.Button("Ok", button_color='#3ddc84', font='5', size=(16,2),)]]
+
+    return sg.Window(title, changelog, background_color='#4285f4')
  
 
   
@@ -433,7 +453,7 @@ menu = [
         [sg.Image("src/logo.png", background_color='#4285f4'), sg.Text("v" + version, size=(5), background_color='#4285f4')],
         [sg.Button("Check for Updates", font='7', button_color='#3ddc84', key="update"), sg.Button("Reinstall Platform-Tools",button_color='#3ddc84', font='7', key="tools")],
         [sg.Text("\n" * 1, background_color='#4285f4' )],
-        [sg.Image(device_render(),  background_color='#4285f4', key='render'), sg.Text(specs(), background_color='#4285f4',  key="refresh", visible=True ), sg.Text("        ", background_color='#4285f4'),  sg.Button("Refresh", key="search", button_color='#3ddc84', font='7')],
+        [sg.Image(device_render(),  background_color='#4285f4', key='render'), sg.Text(specs(), background_color='#4285f4',  key="refresh", visible=True ),sg.Button("Control", key="power", button_color='#3ddc84', font='7', visible=False), sg.Button("Refresh", key="search", button_color='#3ddc84', font='7')],
         [sg.Text( background_color='#4285f4')],
         [sg.Button('Search for ADB Devices', button_color='#3ddc84', font='5', size=(16,2), key="opt1"), sg.Button('Search for Fastboot Devices', button_color='#3ddc84', font='5', size=(16,2), key="opt2")],
         [sg.Button('Android Device Logcat', button_color='#3ddc84', font='5', size=(16,2), key="opt3"), sg.Button('Android Device Backup', button_color='#3ddc84', font='5', size=(16,2), key="opt1")],
@@ -467,6 +487,7 @@ window.set_icon("src/icon.png")
 
 
 while True :
+
     window.refresh()
     event, values = window.read()
 
@@ -490,7 +511,12 @@ while True :
             logcat = "logcat" + "-" + my_device_model + ".txt"
             logcat = logcat.replace("\n.txt", ".txt")
             os.system("cd platform-tools & adb logcat -d -b main -b system -b events -v time > %s" % logcat)
-            window_update.close()
+            window_sucess = window_success("Success")
+            event, values = window_sucess.read()
+
+            if event == "Ok" or event == sg.WIN_CLOSED:
+                window_update.close()
+                window_sucess.close()
 
         elif event == "Cancel" or event == sg.WIN_CLOSED:
             window_update.close()
@@ -501,7 +527,12 @@ while True :
 
         if event == "Unlock Bootloader" :
             os.system("cd platform-tools & fastboot flashing unlock")
-            window_update.close()
+            window_sucess = window_success("Success")
+            event, values = window_sucess.read()
+
+            if event == "Ok" or event == sg.WIN_CLOSED:
+                window_update.close()
+                window_sucess.close()
 
         elif event == "Cancel" or event == sg.WIN_CLOSED:
             window_update.close()
@@ -520,7 +551,12 @@ while True :
 
                 os.system("wget https://github.com/daviiid99/PyDroidGUI/raw/main/PyDroidGUI.py")
                 os.system("python3 PyDroidGUI.py")
-                window_update.close()
+                window_sucess = window_success("Success")
+                event, values = window_sucess.read()
+
+                if event == "Ok" or event == sg.WIN_CLOSED:
+                    window_update.close()
+                    window_sucess.close()
 
             elif event == "Cancel" or event == sg.WIN_CLOSED:
                 window_update.close()
@@ -541,10 +577,22 @@ while True :
 
         if event == "A-Only Partition" :
             os.system("cd platform-tools & adb root & adb pull dev/block/bootdevice/by-name/boot boot_%s" % my_device_model_img)
+            window_sucess = window_success("Success")
+            event, values = window_sucess.read()
+
+            if event == "Ok" or event == sg.WIN_CLOSED:
+                window_update.close()
+                window_sucess.close()
 
         elif event == "A|B Partitions" :
             os.system("cd platform-tools & adb root & adb pull dev/block/bootdevice/by-name/boot_a boot_a_%s" % my_device_model_img)
             os.system("cd platform-tools & adb root & adb pull dev/block/bootdevice/by-name/boot_b boot_b_%s" % my_device_model_img)
+            window_sucess = window_success("Success")
+            event, values = window_sucess.read()
+
+            if event == "Ok" or event == sg.WIN_CLOSED:
+                window_update.close()
+                window_sucess.close()
 
         elif event == "Cancel" or event == sg.WIN_CLOSED:
                 window_update.close()
@@ -559,6 +607,12 @@ while True :
     elif event == "search" :
         refresh()
         refresh_logo()
+        if brand() != "unknown\n" and check_adb_device() !="unknown\n" :
+            window["power"].update(visible=True)
+
+        elif "unknown\n" in brand() :
+            window["power"].update(visible=False)
+            
 
     elif event == "tools":
 
@@ -583,10 +637,41 @@ while True :
                     os.system("rmdir /S /Q platform-tools")
 
                 android_tools_exists(adb_linux, linux)
-                window_update.close()
+
+                window_sucess = window_success("Success")
+                event, values = window_sucess.read()
+
+                if event == "Ok" or event == sg.WIN_CLOSED:
+                    window_update.close()
+                    window_sucess.close()
 
             elif event == "Cancel" or event == sg.WIN_CLOSED:
                 window_update.close()
+
+    elif event == "power" :
+        window_update = window_control("Device Control")
+        event, values = window_update.read()
+
+        if event == "Reboot Recovery" :
+            os.system("cd platform-tools & adb shell reboot recovery")
+            window_update.close()
+
+        elif event == "Reboot System  " :
+            os.system("cd platform-tools & adb reboot system")
+            window_update.close()
+
+        elif event == "Reboot Fastboot" :
+            os.system("cd platform-tools & adb shell reboot bootloader")
+            window_update.close()
+
+        elif event == "PowerOff Phone" :
+            os.system("cd platform-tools & adb shell reboot -p")
+            window_update.close()
+
+        elif event == sg.WIN_CLOSED:
+            window_update.close()
+
+
 
 
     elif event == sg.WIN_CLOSED:
