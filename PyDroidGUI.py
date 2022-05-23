@@ -29,6 +29,7 @@ from zipfile import ZipFile
 from os.path import exists
 from pathlib import Path
 from subprocess import PIPE, Popen
+import platform
 # ==================== End of imports ================================
 
 
@@ -95,7 +96,12 @@ def install_tools(adb_linux, linux) :
     linux = os.system("wget %s " % adb_linux) #Download the platform-tools-latest-linux.zip from Google server
     with ZipFile('platform-tools-latest-linux.zip') as zipObj:
         zipObj.extractall() #Extracts the downloaded file into a subdir called /platform-tools
-    os.system("rm platform-tools-latest-linux.zip ")
+
+    if platform.system() == "Linux" :
+        os.system("rm platform-tools-latest-linux.zip ")
+
+    else :
+        os.system("del /f platform-tools-latest-linux.zip ")
 
 
 def android_tools_exists(adb_linux, linux) :
@@ -112,11 +118,19 @@ def check_for_updates(version) :
     message = False
 
     # Read the version string from an external text document
-    os.system("rm -f version.txt")
+    if platform.system() == "Linux" :
+        os.system("rm -f version.txt")
+    else :
+        os.system("del /f version.txt")
+    
     os.system("wget https://raw.githubusercontent.com/daviiid99/PyDroid/Linux/src/version.txt")
     version_str = Path('version.txt').read_text()
     version_str = version_str.replace('\n', '')
-    os.system("rm -f version.txt")
+
+    if platform.system() == "Linux" :
+        os.system("rm -f version.txt")
+    else :
+        os.system("del /f version.txt")
 
     # Check if the latest version is installed
     if version_str != version :
@@ -126,20 +140,36 @@ def check_for_updates(version) :
 
 def latest_version() :
     # Read the version string from an external text document
-    os.system("rm -f version.txt")
+    if platform.system() == "Linux" :
+        os.system("rm -f version.txt")
+    else :
+        os.system("del /f version.txt")
+
     os.system("wget https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/version.txt")
     version_str = Path('version.txt').read_text()
     version_str = version_str.replace('\n', '')
-    os.system("rm -f version.txt")
+
+    if platform.system() == "Linux" :
+        os.system("rm -f version.txt")
+    else :
+        os.system("del /f version.txt")
 
     return version_str
 
 def latest_changelog() :
     # Read the version string from an external text document
-    os.system("rm -f changelog.txt")
+    if platform.system() == "Linux" :
+        os.system("rm -f changelog.txt")
+    else :
+        os.system("del /f changelog.txt")
+
     os.system("wget https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/changelog.txt")
     changelog_str = Path('changelog.txt').read_text()
-    os.system("rm -f changelog.txt")
+
+    if platform.system() == "Linux" :
+        os.system("rm -f changelog.txt")
+    else :
+        os.system("del /f changelog.txt")
 
     return changelog_str
 
@@ -378,12 +408,14 @@ def install_py(pydroid, script) :
 # =================== Beginning of variables=============
 # Static URLs
 adb_linux ="https://dl.google.com/android/repository/platform-tools-latest-linux.zip"
+adb_windows ="https://dl.google.com/android/repository/platform-tools-latest-windows.zip"
 pydroid = "https://github.com/daviiid99/PyDroidGUI/raw/main/PyDroidGUI.py"
 script = "Main.py"
 
 # Packages names
 usb = "Google_USB.zip"
 linux = "platform-tools-latest-linux.zip"
+windows ="platform-tools-latest-windows.zip"
 gsi_image_xz = "system.img.xz"
 gsi_image = "system.img"
 ota_package = "android_ota.zip"
@@ -480,7 +512,12 @@ while True :
             event, values = window_update.read()
 
             if event == "Perform Update" :
-                os.system("rm PyDroidGUI.py")
+
+                if platform.system() == "Linux" :
+                    os.system("rm -f PyDroidGUI.py")
+                else :
+                    os.system("del /f PyDroidGUI.py")
+
                 os.system("wget https://github.com/daviiid99/PyDroidGUI/raw/main/PyDroidGUI.py")
                 os.system("python3 PyDroidGUI.py")
                 window_update.close()
@@ -519,31 +556,37 @@ while True :
         if event == "Flash GSI" :
             print(values["-FILE-"])
 
-
-
-
-
-
     elif event == "search" :
         refresh()
         refresh_logo()
 
     elif event == "tools":
-         if android_tools_exists(adb_linux, linux) == True :
+
+        if platform.system() == "Linux" :
+            adb = adb_linux
+            file = linux
+
+        else :
+            adb = adb_windows
+            file = windows
+
+        if android_tools_exists(adb, file) == True :
+
             window_update = window_tools("Reinstall Platform-Tools")
             event, values = window_update.read()
 
             if event == "Perform Update" :
-                os.system("rm -rf platform-tools ")
+
+                if platform.system() == "Linux" :
+                    os.system("rm -rf platform-tools")
+                else :
+                    os.system("rmdir /S /Q platform-tools")
+
                 android_tools_exists(adb_linux, linux)
                 window_update.close()
 
             elif event == "Cancel" or event == sg.WIN_CLOSED:
                 window_update.close()
-
-
-           
-
 
 
     elif event == sg.WIN_CLOSED:
