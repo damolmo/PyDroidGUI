@@ -127,7 +127,7 @@ def check_for_updates(version) :
 def latest_version() :
     # Read the version string from an external text document
     os.system("rm -f version.txt")
-    os.system("wget https://raw.githubusercontent.com/daviiid99/PyDroid/Linux/src/version.txt")
+    os.system("wget https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/version.txt")
     version_str = Path('version.txt').read_text()
     version_str = version_str.replace('\n', '')
     os.system("rm -f version.txt")
@@ -137,7 +137,7 @@ def latest_version() :
 def latest_changelog() :
     # Read the version string from an external text document
     os.system("rm -f changelog.txt")
-    os.system("wget https://raw.githubusercontent.com/daviiid99/PyDroid/Linux/src/changelog.txt")
+    os.system("wget https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/changelog.txt")
     changelog_str = Path('changelog.txt').read_text()
     os.system("rm -f changelog.txt")
 
