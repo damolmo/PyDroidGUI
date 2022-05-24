@@ -62,9 +62,7 @@ def all_files(path):
 def zip_dir(path):
     zip_filename = zip_name(path)
     zip_file = zipfile.ZipFile(zip_filename, 'w')
-    print('create:', zip_filename)
     for file in all_files(path):
-        print('adding... ', file)
         zip_file.write(file)
     zip_file.close()
 
@@ -419,7 +417,39 @@ def window_success(title):
             [sg.Button("Ok", button_color='#3ddc84', font='5', size=(16,2),)]]
 
     return sg.Window(title, changelog, background_color='#4285f4')
- 
+
+def device_backup(allowed) :
+    os.system("mkdir backup") # Create a temp dir
+
+    for dirs in allowed:
+        os.system("cd platform-tools & adb pull sdcard/%s backup " % dirs )  # Place all allowed dirs into the temp dir
+
+    
+    zipdir = zip_dir("backup") # Bundle all the allowed dirs into a zip file
+
+    # Remove the temp dir
+    if platform.system() == "Linux" :
+        os.system("rm -rf backup")
+
+    else :
+        os.system("rmdir /S /Q backup")
+
+
+def window_backup(title) : 
+          
+    gsi = [
+          [sg.Image("src/backup.png", background_color='#4285f4')] ,
+          [sg.Text("\nChoose the folders and click start :\n", background_color='#4285f4')],
+          [sg.Checkbox('DCIM', key='DCIM',  background_color='#4285f4')],
+          [sg.Checkbox('PICTURES', key='PICTURES',  background_color='#4285f4')],
+          [sg.Checkbox('DOWNLOADS', key='DOWNLOADS',  background_color='#4285f4')],
+          [sg.Checkbox('MUSIC', key='MUSIC',  background_color='#4285f4')],
+          [sg.Checkbox('DOCUMENTS', key='DOCUMENTS',  background_color='#4285f4')],
+          [sg.Button('Start', button_color='#3ddc84', font='5', size=(16,2), key="start")]], 
+
+    return sg.Window(title, gsi, background_color='#4285f4', finalize=True)
+
+
 
   
 
@@ -456,7 +486,7 @@ menu = [
         [sg.Image(device_render(),  background_color='#4285f4', key='render'), sg.Text(specs(), background_color='#4285f4',  key="refresh", visible=True ),sg.Button("Control", key="power", button_color='#3ddc84', font='7', visible=False), sg.Button("Refresh", key="search", button_color='#3ddc84', font='7')],
         [sg.Text( background_color='#4285f4')],
         [sg.Button('Search for ADB Devices', button_color='#3ddc84', font='5', size=(16,2), key="opt1"), sg.Button('Search for Fastboot Devices', button_color='#3ddc84', font='5', size=(16,2), key="opt2")],
-        [sg.Button('Android Device Logcat', button_color='#3ddc84', font='5', size=(16,2), key="opt3"), sg.Button('Android Device Backup', button_color='#3ddc84', font='5', size=(16,2), key="opt1")],
+        [sg.Button('Android Device Logcat', button_color='#3ddc84', font='5', size=(16,2), key="opt3"), sg.Button('Android Device Backup', button_color='#3ddc84', font='5', size=(16,2), key="backup")],
         [sg.Button('Send file over ADB', button_color='#3ddc84', font='5', size=(16,2), key="opt1"), sg.Button('Sideload OTA package', button_color='#3ddc84', font='5', size=(16,2), key="opt1")],
         [sg.Button('Install Android App', button_color='#3ddc84', font='5', size=(16,2), key="opt1"), sg.Button('Uninstall Android App', button_color='#3ddc84', font='5', size=(16,2), key="opt1")],
         [sg.Button('Flash a Generic System Image', button_color='#3ddc84', font='5', size=(16,2), key="optgsi"), sg.Button('Unlock Android Bootloader', button_color='#3ddc84', font='5', size=(16,2), key="opt0")],
@@ -671,8 +701,31 @@ while True :
         elif event == sg.WIN_CLOSED:
             window_update.close()
 
+    elif event == "backup" :
+        window_update = window_backup("Device Backup")
+        event, values = window_update.read()
+        allowed = []
 
+        if event == "start" :
+           
+            if values["DCIM"] == True :
+                allowed.append("DCIM")
 
+            if values["PICTURES"] == True :
+                allowed.append("Pictures")
+
+            if values["DOWNLOADS"] == True :
+                allowed.append("Download")
+
+            if values["MUSIC"] == True :
+                allowed.append("Music")
+
+            if values["DOCUMENTS"] == True :
+                allowed.append("Documents")
+
+        device_backup(allowed)
+
+        window_update.close()
 
     elif event == sg.WIN_CLOSED:
         break
