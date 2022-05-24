@@ -514,15 +514,21 @@ adb = [[sg.Text("Searching for ADB devices...")],
         [sg.Text("\n" * 2 )]]
 
 
-window = sg.Window("PyDroidGUI", layout,background_color='#4285f4')
+window = sg.Window("PyDroidGUI", layout,background_color='#4285f4', finalize=True)
 window.set_icon("src/icon.png")
-
 
 
 while True :
 
     window.refresh()
+
+    # If the device is detected on app launch, show the control menu
+    # This needs to be asigned before the window is read and even with that is highly experimental
+    if brand() != "unknown\n" and check_adb_device() !="unknown\n" :
+        window["power"].update(visible=True)
+        
     event, values = window.read()
+            
 
     if event == "opt1" :
         message = os.system("cd platform-tools & adb devices")
