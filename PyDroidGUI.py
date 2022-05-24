@@ -305,46 +305,46 @@ def device_render() :
     img_src = "src/device.png"
     render = brand()
 
-    if render == "Xiaomi" or render == "xiaomi" :
+    if render == "Xiaomi" or render == "xiaomi" or render == "XIAOMI" :
         img_src = "src/xiaomi.png"
 
-    elif render == "Oneplus" or render == "oneplus" :
+    elif render == "Oneplus" or render == "oneplus" or render == "ONEPLUS" :
         img_src = "src/oneplus.png"
 
-    elif render == "Google" or render == "google" :
+    elif render == "Google" or render == "google" or render == "XIAOMI":
         img_src = "src/google.png"
 
-    elif render == "Samsung" or render == "samsung" :
+    elif render == "Samsung" or render == "samsung"  or render == "SAMSUNG" :
         img_src = "src/samsung.png"
 
-    elif render == "Sony" or render == "sony" :
+    elif render == "Sony" or render == "sony" or render == "SONY" :
         img_src = "src/sony.png"
 
-    elif render == "Huawei" or render == "huawei" :
+    elif render == "Huawei" or render == "huawei" or render == "HUAWEI" :
         img_src = "src/huawei.png"
 
-    elif render == "Motorola" or render == "motorola" :
+    elif render == "Motorola" or render == "motorola" or render == "XIAOMI" :
         img_src = "src/motorola.png"
 
-    elif render == "BQ" or render == "bq" :
+    elif render == "BQ" or render == "bq" or render == "BQ" :
         img_src = "src/bq.png"
 
-    elif render == "HTC" or render == "htc" :
+    elif render == "HTC" or render == "htc" or render == "HTC" :
         img_src = "src/htc.png"
 
-    elif render == "LGE" or render == "lge" :
+    elif render == "LGE" or render == "lge" or render == "LGE" :
         img_src = "src/lge.png"
 
-    elif render == "ZTE" or render == "zte" :
+    elif render == "ZTE" or render == "zte" or render == "ZTE" :
         img_src = "src/zte.png"
 
-    elif render == "OPPO" or render == "oppo" :
+    elif render == "OPPO" or render == "oppo" or render == "OPPO" :
         img_src = "src/oppo.png"
 
-    elif render == "HMD Global" or render == "hmd global" :
+    elif render == "HMD Global" or render == "hmd global" or render == "HMD GLOBAL" :
         img_src = "src/nokia.png"
 
-    elif render == "Lenovo" or render == "lenovo" :
+    elif render == "Lenovo" or render == "lenovo" or render == "LENOVO" :
         img_src = "src/lenovo.png"
 
 
