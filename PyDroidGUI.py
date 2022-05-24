@@ -121,7 +121,7 @@ def check_for_updates(version) :
     else :
         os.system("del /f version.txt")
     
-    os.system("wget https://raw.githubusercontent.com/daviiid99/PyDroid/Linux/src/version.txt")
+    os.system("wget https://github.com/daviiid99/PyDroidGUI/raw/main/src/version.txt")
     version_str = Path('version.txt').read_text()
     version_str = version_str.replace('\n', '')
 
@@ -352,26 +352,29 @@ def window_changelog(title):
     changelog = [[sg.Text("New Available version : %s              \n\n Changelog :                        \n%s" % (latest_version(), latest_changelog()), background_color='#4285f4')],
             [sg.Button("Perform Update", button_color='#3ddc84', font='5', size=(16,2),), sg.Button("Cancel", button_color='#3ddc84', font='5', size=(16,2),)]]
 
-    return sg.Window(title, changelog, background_color='#4285f4')
+    return sg.Window(title, changelog, background_color='#4285f4', icon="src/icon.png")
 
-def window_version(title):
-    version = [[sg.Text("PyDroid is already updated\nCurrent installed version : %s \nLatest Available Version : %s " % (version, latest_version()), background_color='#4285f4')],
-          [sg.Button("Cancel", button_color='#3ddc84', font='5', size=(16,2),)]]
+def window_version(title, version):
+    version = [
+          [sg.Image("src/logo.png", background_color='#4285f4')],
+          [sg.Text("PyDroid is updated",  background_color='#4285f4', font='5', size=(16,2),)],
+          [sg.Text("Current installed version : %s \nLatest Available Version : %s\n" % (version, latest_version()), background_color='#4285f4')],
+          [sg.Button("Close", button_color='#3ddc84', font='5', size=(16,2),)]]
 
 
-    return sg.Window(title, version, background_color='#4285f4')
+    return sg.Window(title, version, background_color='#4285f4', icon="src/icon.png")
 
 def window_tools(title):
     tools = [[sg.Text("\nReinstall Android platform-tools ?", background_color='#4285f4')],
             [sg.Button("Perform Update", button_color='#3ddc84', font='5', size=(16,2),), sg.Button("Cancel", button_color='#3ddc84', font='5', size=(16,2),)]]
 
-    return sg.Window(title, tools, background_color='#4285f4')
+    return sg.Window(title, tools, background_color='#4285f4', icon="src/icon.png")
 
 def window_logcat(title):
     logcat = [[sg.Text("\nCatch Android Device Logcat ?", background_color='#4285f4')],
             [sg.Button("Ok", button_color='#3ddc84', font='5', size=(16,2),), sg.Button("Cancel", button_color='#3ddc84', font='5', size=(16,2),)]]
 
-    return sg.Window(title, logcat, background_color='#4285f4')
+    return sg.Window(title, logcat, background_color='#4285f4', icon="src/icon.png")
 
 def window_unlock(title):
     unlock = [[sg.Text("\n\nWARNING!!\nBootloader Unlock will ONLY work with Google Pixel\nAndroid One, Motorola and Sony Devices\n\nIf you're using an unlockable device, enable\nSettings > System > Developer Options >\nOEM unlock > Enable\n", background_color='#4285f4')],
@@ -379,13 +382,13 @@ def window_unlock(title):
                 [[sg.Text("\nPress VOL- + POWER to boot into FASTBOOT mode", background_color='#4285f4')]],
                 [sg.Button("Unlock Bootloader", button_color='#3ddc84', font='5', size=(16,2),), sg.Button("Cancel", button_color='#3ddc84', font='5', size=(16,2),)]]
 
-    return sg.Window(title, unlock, background_color='#4285f4')
+    return sg.Window(title, unlock, background_color='#4285f4', icon="src/icon.png")
 
 def window_boot(title):
     boot = [[sg.Text("\nDump Android Boot.img\n\nChoose your partitions scheme ", background_color='#4285f4')],
             [sg.Button("A-Only Partition", button_color='#3ddc84', font='5', size=(16,2),), sg.Button("A|B Partitions", button_color='#3ddc84', font='5', size=(16,2),), sg.Button("Cancel", button_color='#3ddc84', font='5', size=(16,2),)]]
 
-    return sg.Window(title, boot, background_color='#4285f4')
+    return sg.Window(title, boot, background_color='#4285f4', icon="src/icon.png")
 
 def window_gsi(title) : 
 
@@ -395,7 +398,7 @@ def window_gsi(title) :
           [sg.Button("Exit")],
 
     ]
-    return sg.Window(title, gsi, background_color='#4285f4', finalize=True)
+    return sg.Window(title, gsi, background_color='#4285f4', finalize=True, icon="src/icon.png")
 
 def window_control(title) : 
 
@@ -405,7 +408,7 @@ def window_control(title) :
           [sg.Button("PowerOff Phone", button_color='#3ddc84', size=(20,2), font='5')],
 
     ]
-    return sg.Window(title, gsi, background_color='#4285f4', finalize=True)
+    return sg.Window(title, gsi, background_color='#4285f4', finalize=True, icon="src/icon.png")
 
 
 
@@ -416,7 +419,7 @@ def window_success(title):
     changelog = [[sg.Text("\nOperation completed succesfully!", background_color='#4285f4')],
             [sg.Button("Ok", button_color='#3ddc84', font='5', size=(16,2),)]]
 
-    return sg.Window(title, changelog, background_color='#4285f4')
+    return sg.Window(title, changelog, background_color='#4285f4', icon="src/icon.png")
 
 def device_backup(allowed) :
     os.system("mkdir backup") # Create a temp dir
@@ -447,7 +450,7 @@ def window_backup(title) :
           [sg.Checkbox('DOCUMENTS', key='DOCUMENTS',  background_color='#4285f4')],
           [sg.Button('Start', button_color='#3ddc84', font='5', size=(16,2), key="start")]], 
 
-    return sg.Window(title, gsi, background_color='#4285f4', finalize=True)
+    return sg.Window(title, gsi, background_color='#4285f4', finalize=True, icon="src/icon.png")
 
 
 
@@ -592,10 +595,10 @@ while True :
                 window_update.close()
         
         else :
-            window_update = window_version("PyDroid Version")
+            window_update = window_version("PyDroid Version", version)
             event, values = window_update.read()
 
-            if event == "Cancel" or event == sg.WIN_CLOSED:
+            if event == "Close" or event == sg.WIN_CLOSED:
                 window_update.close()
 
     elif event == "optboot" :
