@@ -531,7 +531,7 @@ def dialer (lista) :
 
     calling = True
 
-    call = window_call("Screenshot preview")
+    call = window_call("Dialer")
     
     while (calling != False) :
 
