@@ -76,6 +76,9 @@ def check_adb_device():
     except subprocess.CalledProcessError as e:
         my_device_model = str("unknown\n")
 
+    if "19" in sdk_level():
+        my_device_model = my_device_model.replace("\n", "")
+
     return my_device_model
 
 def check_fastboot_device():
@@ -240,6 +243,8 @@ def refresh_logo():
 
 def battery_level() :
 
+    bat = []
+
     try :
         level = "unknown"
         level = subprocess.check_output("cd platform-tools & adb shell dumpsys battery | grep level", shell=True, )
@@ -247,13 +252,22 @@ def battery_level() :
         level = str(level)
         level = level.replace(" level: ", "")
         level = level.replace("\n", "")
-        level = level + "%"
+        level = level  + "%"
 
     except subprocess.CalledProcessError as e:
         level = str("unknown\n")
 
     if "100%" in level :
         level = "charged"
+
+    if "19" in sdk_level():
+        string = ""
+        bat.append(level)
+
+        for character in bat :
+            if character != "" and character != "\n":
+                string +=character
+        level = string
 
     return "Battery : " + level
 
@@ -268,6 +282,9 @@ def manufacturer() :
 
     except subprocess.CalledProcessError as e:
         level = str("unknown\n")
+
+    if "19" in sdk_level():
+        level = level.replace("\n", "")
 
     return "Manufacturer : " + level
 
@@ -284,6 +301,27 @@ def brand() :
 
     return brand
 
+def sdk_level() :
+    version = "unknown"
+
+    if brand() != "unknown" :
+
+        ver = []
+
+        try :
+            version = subprocess.check_output("cd platform-tools & adb shell getprop ro.build.version.sdk", shell=True, )
+            version = version.decode("utf-8")
+            version = str(version)
+            version = version.replace("\n", "")
+            ver.append(version)
+            version = ver[0]
+
+        except subprocess.CalledProcessError as e:
+            version = str("unknown\n")
+
+    return version
+
+
 def android_version() :
 
     try :
@@ -293,6 +331,9 @@ def android_version() :
 
     except subprocess.CalledProcessError as e:
         version = str("unknown\n")
+
+    if "19" in sdk_level():
+        version = version.replace("\n", "")
 
     return "Android version : " + version
 
@@ -304,46 +345,46 @@ def device_render() :
     img_src = device_icon
     render = brand()
 
-    if render == "Xiaomi" or render == "xiaomi" or render == "XIAOMI" :
+    if "Xiaomi" in render or "xiaomi" in render or "XIAOMI" in render :
         img_src = xiaomi_icon
 
-    elif render == "Oneplus" or render == "oneplus" or render == "ONEPLUS" :
+    elif "Oneplus" in render or "oneplus" in render or "ONEPLUS" in render : 
         img_src = oneplus_icon
 
-    elif render == "Google" or render == "google" or render == "XIAOMI":
+    elif "Google" in render or "google" in render or "GOOGLE" in render :
         img_src = google_icon
 
-    elif render == "Samsung" or render == "samsung"  or render == "SAMSUNG" :
+    elif "Samsung" in render or "samsung" in render or "SAMSUNG" in render :
         img_src = samsung_icon
 
-    elif render == "Sony" or render == "sony" or render == "SONY" :
+    elif "Sony" in render or "sony" in render or "SONY" in render :
         img_src = sony_icon
 
-    elif render == "Huawei" or render == "huawei" or render == "HUAWEI" :
+    elif "Huawei" in render or "huawei" in render or "HUAWEI" in render :
         img_src = huawei_icon
 
-    elif render == "Motorola" or render == "motorola" or render == "XIAOMI" :
+    elif "Motorola" in render or "motorola" in render or "MOTOROLA" in render :
         img_src = motorola_icon
 
-    elif render == "BQ" or render == "bq" or render == "BQ" :
+    elif "BQ" in render or "bq" in render or "BQ" in render :
         img_src = bq_icon
 
-    elif render == "HTC" or render == "htc" or render == "HTC" :
+    elif "HTC" in render or "htc" in render or "HTC" in render :
         img_src = htc_icon
 
-    elif render == "LGE" or render == "lge" or render == "LGE" :
+    elif "LGE" in render or "lge" in render or "LGE" in render :
         img_src = lg_icon
 
-    elif render == "ZTE" or render == "zte" or render == "ZTE" :
+    elif "ZTE" in render or "zte" in render or "ZTE" in render :
         img_src = zte_icon
 
-    elif render == "OPPO" or render == "oppo" or render == "OPPO" :
+    elif "OPPO" in render or "oppo" in render or "OPPO" in render :
         img_src = oppo_icon
 
-    elif render == "HMD Global" or render == "hmd global" or render == "HMD GLOBAL" :
+    elif "HMD Global" in render or "hmd global" in render or "HMD GLOBAL" in render :
         img_src = nokia_icon
 
-    elif render == "Lenovo" or render == "lenovo" or render == "LENOVO" :
+    elif "Lenovo" in render or "lenovo" in render or "LENOVO" in render:
         img_src = lenovo_icon
 
 
