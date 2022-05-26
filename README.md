@@ -1,7 +1,7 @@
 <img src = "src/logo.png">  <br/>
 PyDroidGUI is an Android Platform-tools GUI that provides an easy-to-use user interface to control your Android Device
 
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) 
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 <br/>
 
@@ -10,7 +10,8 @@ PyDroidGUI is an Android Platform-tools GUI that provides an easy-to-use user in
 <br/>
 
 # System Requirements
-• <a href="https://www.python.org/downloads/">Python 3.10 version or newer</a>
+• <a href="https://www.python.org/downloads/">Python 3.10 version or newer</a><br/>
+• Android KitKat (SDK 19) or newer (Recommended)
 <br/>
 
 # Status
