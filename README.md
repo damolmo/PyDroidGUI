@@ -11,7 +11,16 @@ PyDroidGUI is an Android Platform-tools GUI that provides an easy-to-use user in
 
 # System Requirements
 • <a href="https://www.python.org/downloads/">Python 3.10 version or newer</a><br/>
-• Android KitKat (SDK 19) or newer (Recommended)
+• Android KitKat (SDK 19) or newer (Recommended)<br/>
+• wget (we're not using the python wget module for compatibility issues)
+
+on Ubuntu/Debian you can install it with
+```
+sudo apt-get install wget
+```
+
+On Windows, you can install <a href="https://sourceforge.net/projects/gnuwin32/files/wget/1.11.4-1/wget-1.11.4-1-setup.exe/download?use_mirror=excellmedia">wget for Windows</a>
+
 <br/>
 
 # Status
