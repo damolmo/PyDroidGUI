@@ -93,16 +93,29 @@ def check_fastboot_device():
 
     return my_device_model
 
-def install_tools(adb_linux, linux) :
-    linux = os.system("wget %s " % adb_linux) #Download the platform-tools-latest-linux.zip from Google server
-    with ZipFile('platform-tools-latest-linux.zip') as zipObj:
-        zipObj.extractall() #Extracts the downloaded file into a subdir called /platform-tools
+def install_tools(adb_linux, package) :
+    if platform.system() == "Linux" :
+        package = os.system("wget https://dl.google.com/android/repository/platform-tools-latest-linux.zip") #Download the platform-tools-latest-linux.zip from Google server
 
+    else :
+        package = os.system("wget.exe https://dl.google.com/android/repository/platform-tools-latest-windows.zip") #Download the platform-tools-latest-linux.zip from Google server
+
+    if platform.system() == "Linux" :
+        with ZipFile("platform-tools-latest-linux.zip") as zipObj:
+            zipObj.extractall() #Extracts the downloaded file into a subdir called /platform-tools
+
+    else :
+        with ZipFile("platform-tools-latest-windows.zip") as zipObj:
+            zipObj.extractall() #Extracts the downloaded file into a subdir called /platform-tools
+        
     if platform.system() == "Linux" :
         os.system("rm platform-tools-latest-linux.zip ")
 
     else :
-        os.system("del /f platform-tools-latest-linux.zip ")
+        os.system("del /f platform-tools-latest-windows.zip ")
+
+def install_wget() :
+    linux = wget.download("https://eternallybored.org/misc/wget/1.21.3/64/wget.exe") #Download the platform-tools-latest-linux.zip from Google server
 
 
 def android_tools_exists(adb_linux, linux) :
@@ -115,6 +128,16 @@ def android_tools_exists(adb_linux, linux) :
 
     return exists
 
+def wget_exists() :
+    exists = False
+    if os.path.exists("wget.exe") :
+        exists = True
+
+    else :
+        install_wget()
+
+    return exists
+
 def check_for_updates(version) :
     message = False
 
@@ -123,8 +146,14 @@ def check_for_updates(version) :
         os.system("rm -f version.txt")
     else :
         os.system("del /f version.txt")
-    
-    os.system("wget https://github.com/daviiid99/PyDroidGUI/raw/main/src/version.txt")
+
+    if platform.system() == "Linux" :
+        os.system("wget https://github.com/daviiid99/PyDroidGUI/raw/main/src/version.txt")
+
+    else :
+        os.system("wget.exe https://github.com/daviiid99/PyDroidGUI/raw/main/src/version.txt")
+        
+
     version_str = Path('version.txt').read_text()
     version_str = version_str.replace('\n', '')
 
@@ -146,7 +175,12 @@ def latest_version() :
     else :
         os.system("del /f version.txt")
 
-    os.system("wget https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/version.txt")
+    if platform.system() == "Linux" :
+        os.system("wget https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/version.txt")
+
+    else :
+        os.system("wget.exe https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/version.txt")
+
     version_str = Path('version.txt').read_text()
     version_str = version_str.replace('\n', '')
 
@@ -164,7 +198,14 @@ def latest_changelog() :
     else :
         os.system("del /f changelog.txt")
 
-    os.system("wget https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/changelog.txt")
+    
+    if platform.system() == "Linux" :
+        os.system("wget https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/changelog.txt")
+
+    else :
+        os.system("wget.exe https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/changelog.txt")
+
+        
     changelog_str = Path('changelog.txt').read_text()
 
     if platform.system() == "Linux" :
@@ -810,7 +851,7 @@ ota_package = "android_ota.zip"
 # Other variables
 DATE_FORMAT = '%y%m%d'
 user = 0 # For keyboard input 
-version = "1.1"
+version = "1.2"
 
 # Images data
 ## Main menu
@@ -858,7 +899,17 @@ backup_img = b'iVBORw0KGgoAAAANSUhEUgAAAO0AAAEeCAYAAABmPJKMAAAXTXpUWHRSYXcgcHJvZ
 # ==================== End of variables ===================
 
 # ================= Beginning of Main =====================
-android_tools_exists(adb_linux, linux)
+# Download latest wget binary for windows
+# For better compatibility
+if platform.system() == "Windows" :
+    wget_exists()
+    
+# Download platform-tools on first boot
+if platform.system() == "Linux" :
+    android_tools_exists(adb_linux, linux)
+
+else :
+    android_tools_exists(adb_windows, windows)
 
 menu = [
         [sg.Image(logo_icon, background_color='#4285f4'), sg.Text("v" + version, size=(5), background_color='#4285f4')],
@@ -963,8 +1014,11 @@ while True :
                     os.system("rm -f PyDroidGUI.py")
                 else :
                     os.system("del /f PyDroidGUI.py")
-
-                os.system("wget https://github.com/daviiid99/PyDroidGUI/raw/main/PyDroidGUI.py")
+                if platform.system() == "Linux" :
+                    os.system("wget https://github.com/daviiid99/PyDroidGUI/raw/main/PyDroidGUI.py")
+                else :
+                    os.system("wget.exe https://github.com/daviiid99/PyDroidGUI/raw/main/PyDroidGUI.py")
+                    
                 os.system("python3 PyDroidGUI.py")
                 window_sucess = window_success("Success")
                 event, values = window_sucess.read()
