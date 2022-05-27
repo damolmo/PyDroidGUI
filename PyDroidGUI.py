@@ -589,7 +589,7 @@ def dialer (lista) :
             for telefono in lista :
                 numero = numero + telefono
 
-            call['OUTPUT'].update(value= numero)
+            call['OUTPUT'].update(value = numero)
 
         elif event == "1":
             lista.append("1")
@@ -598,7 +598,7 @@ def dialer (lista) :
             for telefono in lista :
                 numero = numero + telefono
 
-            call['OUTPUT'].update(value= numero)
+            call['OUTPUT'].update(value = numero)
 
         elif event == "2":
                 lista.append("2")
@@ -607,7 +607,7 @@ def dialer (lista) :
                 for telefono in lista :
                     numero = numero + telefono
 
-                call['OUTPUT'].update(value= numero)
+                call['OUTPUT'].update(value = numero)
 
         elif event == "3":
                 lista.append("3")
@@ -616,7 +616,7 @@ def dialer (lista) :
                 for telefono in lista :
                     numero = numero + telefono
 
-                call['OUTPUT'].update(value= numero)
+                call['OUTPUT'].update(value = numero)
 
         elif event == "4":
                 lista.append("4")
@@ -625,7 +625,7 @@ def dialer (lista) :
                 for telefono in lista :
                     numero = numero + telefono
 
-                call['OUTPUT'].update(value= numero)
+                call['OUTPUT'].update(value = numero)
 
         elif event == "5":
                 lista.append("5")
@@ -634,7 +634,7 @@ def dialer (lista) :
                 for telefono in lista :
                     numero = numero + telefono
 
-                call['OUTPUT'].update(value= numero)
+                call['OUTPUT'].update(value = numero)
 
         elif event == "6":
                 lista.append("6")
@@ -643,7 +643,7 @@ def dialer (lista) :
                 for telefono in lista :
                     numero = numero + telefono
 
-                call['OUTPUT'].update(value= numero)
+                call['OUTPUT'].update(value = numero)
 
         elif event == "7":
                 lista.append("7")
@@ -652,7 +652,7 @@ def dialer (lista) :
                 for telefono in lista :
                     numero = numero + telefono
 
-                call['OUTPUT'].update(value= numero)
+                call['OUTPUT'].update(value = numero)
 
         elif event == "8":
                 lista.append("8")
@@ -661,7 +661,7 @@ def dialer (lista) :
                 for telefono in lista :
                     numero = numero + telefono
 
-                call['OUTPUT'].update(value= numero)
+                call['OUTPUT'].update(value = numero)
 
         elif event == "9":
                 lista.append("9")
@@ -670,7 +670,7 @@ def dialer (lista) :
                 for telefono in lista :
                     numero = numero + telefono
 
-                call['OUTPUT'].update(value= numero)
+                call['OUTPUT'].update(value = numero)
 
         elif event == "+" :
                 lista.append("+")
@@ -679,13 +679,15 @@ def dialer (lista) :
                 for telefono in lista :
                     numero = numero + telefono
 
-                call['OUTPUT'].update(value= numero)
+                call['OUTPUT'].update(value = numero)
 
         elif event == "del" :
+            if (len(lista) == 0):
+                numero = ""
 
             numero = numero[:-1]
 
-            call['OUTPUT'].update(value= numero)
+            call['OUTPUT'].update(value = numero)
 
             lista.clear()
 
