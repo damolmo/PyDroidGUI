@@ -612,6 +612,38 @@ def window_screen(title) :
 
     return sg.Window(title, img, background_color='#4285f4', finalize=True, icon=app_icon)
 
+def screen_dpi() :
+    try :
+        dpi = "unknown"
+        dpi = subprocess.check_output("cd platform-tools & adb shell wm density", shell=True, )
+        dpi = dpi.decode("utf-8")
+        dpi = str(dpi)
+
+    except subprocess.CalledProcessError as e:
+        dpi = str("No device found\n")
+
+    return dpi
+
+def set_dpi(dpi) :
+    os.system("cd platform-tools & adb shell wm density %s" % dpi)
+
+def window_dpi(title) :
+
+    dpi_image = b'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'
+
+
+    img = [
+        [sg.Image(dpi_image, background_color='#4285f4')],
+        [sg.Text("Current Screen DPI : ", background_color='#4285f4')],
+        [sg.Text("%s" % screen_dpi(), background_color='#4285f4')],
+        [sg.Text("Insert your new DPI : ", background_color='#4285f4')],
+        [sg.Input(key='INPUT', size=(7))],
+        [sg.Button('Apply', button_color='#3ddc84', font='5', size=(12,2), key="apply")],
+    ]
+
+    return sg.Window(title, img, background_color='#4285f4', finalize=True, icon=app_icon)
+
+
 
 def dialer (lista) :
 
@@ -919,7 +951,7 @@ menu = [
         [sg.Text( background_color='#4285f4')],
         [sg.Button('',  font='5', size=(16,2), key="opt1", button_color='#4285f4', border_width=0, image_data=adb_icon),  sg.Button('', button_color='#4285f4', border_width=0, image_data=fastboot_icon , font='5', size=(16,2), key="opt2"), sg.Button('',  font='5', size=(16,2), key="opt3", button_color='#4285f4', border_width=0, image_data=logcat_icon), sg.Button('', font='5', size=(16,2), key="backup", button_color='#4285f4', border_width=0, image_data=backup_icon)],
         [sg.Button('', button_color='#4285f4', border_width=0, image_data=adb_file_icon, font='5', size=(16,2), key="opt1"), sg.Button('', button_color='#4285f4', border_width=0, image_data=android_ota_icon, font='5', size=(16,2), key="opt1"), sg.Button('', button_color='#4285f4', border_width=0, image_data=install_apk_icon, font='5', size=(16,2), key="opt1"), sg.Button('', button_color='#4285f4', border_width=0, image_data=uninstall_apk_icon, font='5', size=(16,2), key="opt1")],
-        [sg.Button('', button_color='#4285f4', border_width=0, image_data=gsi_icon, font='5', size=(16,2), key="optgsi"), sg.Button('', button_color='#4285f4', border_width=0, image_data=unlock_icon, font='5', size=(16,2), key="opt0"), sg.Button('', button_color='#4285f4', border_width=0, image_data=boot_icon, font='5', size=(16,2), key="optboot"), sg.Button('', button_color='#4285f4', border_width=0, image_data=dpi_icon, font='5', size=(16,2), key="opt1") ],
+        [sg.Button('', button_color='#4285f4', border_width=0, image_data=gsi_icon, font='5', size=(16,2), key="optgsi"), sg.Button('', button_color='#4285f4', border_width=0, image_data=unlock_icon, font='5', size=(16,2), key="opt0"), sg.Button('', button_color='#4285f4', border_width=0, image_data=boot_icon, font='5', size=(16,2), key="optboot"), sg.Button('', button_color='#4285f4', border_width=0, image_data=dpi_icon, font='5', size=(16,2), key="optdpi") ],
         ]
 
 layout = [
@@ -1187,6 +1219,25 @@ while True :
         device_backup(allowed)
 
         window_update.close()
+
+    elif event == "optdpi" :
+        window_update = window_dpi("Device DPI")
+        event, values = window_update.read()
+
+        if event == "apply" :
+            dpi = values['INPUT']
+            set_dpi(dpi)
+
+            window_sucess = window_success("Success")
+            event, values = window_sucess.read()
+
+            if event == "Ok" or event == sg.WIN_CLOSED:
+                window_update.close()
+                window_sucess.close()
+
+
+        elif event == sg.WIN_CLOSED:
+            window_update.close()
 
     elif event == sg.WIN_CLOSED:
         break
