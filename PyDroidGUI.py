@@ -1013,7 +1013,7 @@ window.set_icon(app_icon)
 while True :
 
     mixer.init()
-    mixer.music.load("wake-up.mp3")
+    mixer.music.load("theme.mp3")
     mixer.music.play(-1)
 
     window.refresh()
