@@ -8,6 +8,10 @@ print("-----------------------------\nInstalling core components...\nPlease wait
 os.system("pip3 install wheel")
 os.system("pip3 install wget")
 os.system("pip3 install pysimplegui")
+os.system("pip3 install pygame")
+os.system("pip install pygame")
+os.system("pip3.10 install pygame")
+
 # =================== End of dependencies ===========================================
 
 
@@ -30,6 +34,7 @@ from os.path import exists
 from pathlib import Path
 from subprocess import PIPE, Popen
 import platform
+from pygame import mixer
 # ==================== End of imports ================================
 
 
@@ -125,6 +130,22 @@ def android_tools_exists(adb_linux, linux) :
 
     else :
         install_tools(adb_linux, linux)
+
+    return exists
+
+def download_music() :
+    linux = wget.download("https://github.com/daviiid99/PyDroidGUI/raw/main/src/theme.mp3") #Download the platform-tools-latest-linux.zip from Google server
+
+
+def background_music_exists() :
+    exists = False
+    if os.path.exists("theme.mp3") :
+        exists = True
+
+    else :
+        download_music()
+
+
 
     return exists
 
@@ -954,6 +975,8 @@ if platform.system() == "Linux" :
 else :
     android_tools_exists(adb_windows, windows)
 
+background_music_exists()
+
 menu = [
         [sg.Image(logo_icon, background_color='#4285f4'), sg.Text("v" + version, size=(5), background_color='#4285f4')],
         [sg.Button("Check for Updates", font='7', button_color='#3ddc84', key="update"), sg.Button("Install Platform-Tools",button_color='#3ddc84', font='7', key="tools")],
@@ -988,6 +1011,10 @@ window.set_icon(app_icon)
 
 
 while True :
+
+    mixer.init()
+    mixer.music.load("wake-up.mp3")
+    mixer.music.play(-1)
 
     window.refresh()
 
