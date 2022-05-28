@@ -1012,12 +1012,11 @@ window.set_icon(app_icon)
 
 while True :
 
+    window.refresh()
     mixer.init()
     mixer.music.load("theme.mp3")
-    mixer.music.play(-1)
 
-    window.refresh()
-
+    
     # If the device is detected on app launch, show the control menu
     # This needs to be asigned before the window is read and even with that is highly experimental
     if brand() != "unknown\n" and check_adb_device() !="unknown\n" :
@@ -1039,10 +1038,12 @@ while True :
         print = sg.Print
 
     elif event == "opt3" :
+        mixer.music.play()
         window_update = window_logcat("Get Android Device Logcat")
         event, values = window_update.read()
 
         if event == "Ok" :
+            mixer.music.play()
             my_device_model = model()
             logcat = "logcat" + "-" + my_device_model + ".txt"
             logcat = logcat.replace("\n.txt", ".txt")
@@ -1058,6 +1059,7 @@ while True :
             window_update.close()
 
     elif event == "opt0" :
+        mixer.music.play()
         window_update = window_unlock("Get Android Device Logcat")
         event, values = window_update.read()
 
@@ -1074,6 +1076,7 @@ while True :
             window_update.close()
         
     elif event == "update" :
+        mixer.music.play()
         if check_for_updates(version) == True :
             window_update = window_changelog("Check for Updates")
             event, values = window_update.read()
@@ -1108,6 +1111,7 @@ while True :
                 window_update.close()
 
     elif event == "optboot" :
+        mixer.music.play()
         window_update = window_boot("Get Android Device Logcat")
         event, values = window_update.read()
         my_device_model = model()
@@ -1137,6 +1141,8 @@ while True :
                 window_update.close()
         
     elif event == "optgsi" :
+        mixer.music.play()
+
         window_update = window_gsi("Flash a Generic System Image")
         event, values = window_update.read()
 
@@ -1165,6 +1171,8 @@ while True :
 
 
     elif event == "search" :
+        mixer.music.play()
+
         refresh()
         refresh_logo()
         if brand() != "unknown\n" and check_adb_device() !="unknown\n" :
@@ -1184,6 +1192,7 @@ while True :
         
 
     elif event == "tools":
+        mixer.music.play()
 
         if platform.system() == "Linux" :
             adb = adb_linux
@@ -1218,6 +1227,8 @@ while True :
                 window_update.close()
 
     elif event == "power" :
+        mixer.music.play()
+
         window_update = window_control("Device Control")
         event, values = window_update.read()
 
@@ -1254,6 +1265,8 @@ while True :
             window_update.close()
 
     elif event == "backup" :
+        mixer.music.play()
+
         window_update = window_backup("Device Backup")
         event, values = window_update.read()
         allowed = []
@@ -1280,6 +1293,8 @@ while True :
         window_update.close()
 
     elif event == "optdpi" :
+        mixer.music.play()
+
         window_update = window_dpi("Device DPI")
         event, values = window_update.read()
 
