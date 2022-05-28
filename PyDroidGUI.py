@@ -473,15 +473,26 @@ def window_boot(title):
 
     return sg.Window(title, boot, background_color='#4285f4', icon=app_icon)
 
-def window_gsi(title) : 
+def flash_gsi(title):
+    boot = [[sg.Text("\nChoose your partition ", background_color='#4285f4')],
+            [sg.Button("system_a", button_color='#3ddc84', font='5', size=(16,2), key="a"), sg.Button("system_b", button_color='#3ddc84', font='5', size=(16,2),), sg.Button("Cancel", button_color='#3ddc84', font='5', size=(16,2), key="b")]]
 
-    gsi = [[sg.FileBrowse( key="-FILE-")],
+    return sg.Window(title, boot, background_color='#4285f4', icon=app_icon)
+
+
+def window_gsi(title) : 
+    dpi_image = b'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'
+
+
+    gsi = [
+          [sg.Image(dpi_image, background_color='#063042')],
+          [sg.FileBrowse("Browse GSI File", key="-FILE-")],
           [sg.Image()],
-          [sg.Button("Flash GSI")],
-          [sg.Button("Exit")],
+          [sg.Button("Flashing GSI   ")],
+          [sg.Button("Exit  ")],
 
     ]
-    return sg.Window(title, gsi, background_color='#4285f4', finalize=True, icon=app_icon)
+    return sg.Window(title, gsi, background_color='#063042', finalize=True, icon=app_icon)
 
 def window_control(title) : 
 
@@ -1102,8 +1113,29 @@ while True :
         window_update = window_gsi("Flash a Generic System Image")
         event, values = window_update.read()
 
-        if event == "Flash GSI" :
-            print(values["-FILE-"])
+        if event == "Flashing GSI   " :
+            gsi = values["-FILE-"]
+            gsi_flashing = flash_gsi("Choose partition")
+            event, values = gsi_flashing.read()
+
+            if event == "a" :
+                os.system("cd platform-tools & fastboot flash system_a %s" % gsi)
+
+            elif event == "b" :
+
+                os.system("cd platform-tools & fastboot flash system_a %s" % gsi)
+
+            window_sucess = window_success("Success")
+            event, values = window_sucess.read()
+
+            if event == "Ok" or event == sg.WIN_CLOSED:
+                window_update.close()
+                window_sucess.close()
+
+        elif event == "Exit  " or event == sg.WIN_CLOSED:
+                window_update.close()
+
+
 
     elif event == "search" :
         refresh()
