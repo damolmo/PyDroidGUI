@@ -104,6 +104,7 @@ def install_tools(adb_linux, package) :
 
     else :
         package = os.system("cd src & wget.exe https://dl.google.com/android/repository/platform-tools-latest-windows.zip") #Download the platform-tools-latest-linux.zip from Google server
+        mv = os.system("cd src & move platform-tools-latest-windows.zip ../platform-tools-latest-windows.zip")
 
     if platform.system() == "Linux" :
         with ZipFile("platform-tools-latest-linux.zip") as zipObj:
@@ -119,9 +120,10 @@ def install_tools(adb_linux, package) :
     else :
         os.system("del /f platform-tools-latest-windows.zip ")
 
-def install_wget() :
-    linux = wget.download("https://eternallybored.org/misc/wget/1.21.3/64/wget.exe", "src/wget.exe") #Download the platform-tools-latest-linux.zip from Google server
 
+def install_wget() :
+    linux = wget.download("https://eternallybored.org/misc/wget/1.21.3/64/wget.exe") #Download the platform-tools-latest-linux.zip from Google server
+    mv = os.system("move wget.exe src/wget.exe")
 
 def android_tools_exists(adb_linux, linux) :
     exists = False
@@ -137,6 +139,21 @@ def download_music() :
     linux = wget.download("https://github.com/daviiid99/PyDroidGUI/raw/main/src/theme.mp3", "src/theme.mp3") #Download the platform-tools-latest-linux.zip from Google server
 
 
+def src_dir_exists() :
+    exists = False
+    if os.path.exists("src") :
+        exists = True
+
+    else :
+        if platform.system() == "Linux" :
+            create_dir = os.system("mkdir -p src")
+
+        else :
+            create_dir = os.system("mkdir src")
+        
+
+    return exists
+
 def background_music_exists() :
     exists = False
     if os.path.exists("src/theme.mp3") :
@@ -144,8 +161,6 @@ def background_music_exists() :
 
     else :
         download_music()
-
-
 
     return exists
 
@@ -328,9 +343,9 @@ def check_for_updates(version) :
 
     # Read the version string from an external text document
     if platform.system() == "Linux" :
-        os.system("rm -f version.txt")
+        os.system("rm -f src/version.txt")
     else :
-        os.system("del /f version.txt")
+        os.system("del /f src/version.txt")
 
     if platform.system() == "Linux" :
         os.system("wget https://github.com/daviiid99/PyDroidGUI/raw/main/src/version.txt")
@@ -339,13 +354,13 @@ def check_for_updates(version) :
         os.system("cd src & wget.exe https://github.com/daviiid99/PyDroidGUI/raw/main/src/version.txt")
         
 
-    version_str = Path('version.txt').read_text()
+    version_str = Path('src/version.txt').read_text()
     version_str = version_str.replace('\n', '')
 
     if platform.system() == "Linux" :
-        os.system("rm -f version.txt")
+        os.system("rm -f src/version.txt")
     else :
-        os.system("del /f version.txt")
+        os.system("del /f src/version.txt")
 
     # Check if the latest version is installed
     if version_str != version :
@@ -356,7 +371,7 @@ def check_for_updates(version) :
 def latest_version() :
     # Read the version string from an external text document
     if platform.system() == "Linux" :
-        os.system("rm -f version.txt")
+        os.system("rm -f src/version.txt")
     else :
         os.system("del /f version.txt")
 
@@ -366,13 +381,13 @@ def latest_version() :
     else :
         os.system("cd src & wget.exe https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/version.txt")
 
-    version_str = Path('version.txt').read_text()
+    version_str = Path('src/version.txt').read_text()
     version_str = version_str.replace('\n', '')
 
     if platform.system() == "Linux" :
-        os.system("rm -f version.txt")
+        os.system("rm -f src/version.txt")
     else :
-        os.system("del /f version.txt")
+        os.system("del /f src/version.txt")
 
     return version_str
 
@@ -1163,6 +1178,10 @@ backup_img = b'iVBORw0KGgoAAAANSUhEUgAAAO0AAAEeCAYAAABmPJKMAAAXTXpUWHRSYXcgcHJvZ
 # ==================== End of variables ===================
 
 # ================= Beginning of Main =====================
+
+## src dir exists
+src_dir_exists()
+
 # Download latest wget binary for windows
 # For better compatibility
 if platform.system() == "Windows" :
@@ -1176,6 +1195,8 @@ else :
     android_tools_exists(adb_windows, windows)
 
 # Checks for system resources
+
+
 ## Background Music
 background_music_exists()
 
