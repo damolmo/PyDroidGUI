@@ -103,7 +103,7 @@ def install_tools(adb_linux, package) :
         package = os.system("wget https://dl.google.com/android/repository/platform-tools-latest-linux.zip") #Download the platform-tools-latest-linux.zip from Google server
 
     else :
-        package = os.system("wget.exe https://dl.google.com/android/repository/platform-tools-latest-windows.zip") #Download the platform-tools-latest-linux.zip from Google server
+        package = os.system("cd src & wget.exe https://dl.google.com/android/repository/platform-tools-latest-windows.zip") #Download the platform-tools-latest-linux.zip from Google server
 
     if platform.system() == "Linux" :
         with ZipFile("platform-tools-latest-linux.zip") as zipObj:
@@ -120,7 +120,7 @@ def install_tools(adb_linux, package) :
         os.system("del /f platform-tools-latest-windows.zip ")
 
 def install_wget() :
-    linux = wget.download("https://eternallybored.org/misc/wget/1.21.3/64/wget.exe") #Download the platform-tools-latest-linux.zip from Google server
+    linux = wget.download("https://eternallybored.org/misc/wget/1.21.3/64/wget.exe", "src/wget.exe") #Download the platform-tools-latest-linux.zip from Google server
 
 
 def android_tools_exists(adb_linux, linux) :
@@ -134,12 +134,12 @@ def android_tools_exists(adb_linux, linux) :
     return exists
 
 def download_music() :
-    linux = wget.download("https://github.com/daviiid99/PyDroidGUI/raw/main/src/theme.mp3") #Download the platform-tools-latest-linux.zip from Google server
+    linux = wget.download("https://github.com/daviiid99/PyDroidGUI/raw/main/src/theme.mp3", "src/theme.mp3") #Download the platform-tools-latest-linux.zip from Google server
 
 
 def background_music_exists() :
     exists = False
-    if os.path.exists("theme.mp3") :
+    if os.path.exists("src/theme.mp3") :
         exists = True
 
     else :
@@ -151,13 +151,177 @@ def background_music_exists() :
 
 def wget_exists() :
     exists = False
-    if os.path.exists("wget.exe") :
+    if os.path.exists("src/wget.exe") :
         exists = True
 
     else :
         install_wget()
 
     return exists
+
+def phone_sound_0 () :
+
+    linux = wget.download("https://github.com/daviiid99/PyDroidGUI/raw/main/src/0.mp3", "src/0.mp3") #Download the platform-tools-latest-linux.zip from Google server
+
+def phone_sound_1 () :
+
+    linux = wget.download("https://github.com/daviiid99/PyDroidGUI/raw/main/src/1.mp3", "src/1.mp3") #Download the platform-tools-latest-linux.zip from Google server
+
+
+def phone_sound_2 () :
+
+    linux = wget.download("https://github.com/daviiid99/PyDroidGUI/raw/main/src/2.mp3", "src/2.mp3") #Download the platform-tools-latest-linux.zip from Google server
+
+
+def phone_sound_3 () :
+
+    linux = wget.download("https://github.com/daviiid99/PyDroidGUI/raw/main/src/3.mp3", "src/3.mp3") #Download the platform-tools-latest-linux.zip from Google server
+
+
+def phone_sound_4 () :
+
+    linux = wget.download("https://github.com/daviiid99/PyDroidGUI/raw/main/src/4.mp3", "src/4.mp3") #Download the platform-tools-latest-linux.zip from Google server
+
+
+def phone_sound_5 () :
+
+    linux = wget.download("https://github.com/daviiid99/PyDroidGUI/raw/main/src/5.mp3", "src/5.mp3") #Download the platform-tools-latest-linux.zip from Google server
+
+
+def phone_sound_6 () :
+
+    linux = wget.download("https://github.com/daviiid99/PyDroidGUI/raw/main/src/6.mp3", "src/6.mp3") #Download the platform-tools-latest-linux.zip from Google server
+
+
+def phone_sound_7 () :
+
+    linux = wget.download("https://github.com/daviiid99/PyDroidGUI/raw/main/src/7.mp3", "src/7.mp3") #Download the platform-tools-latest-linux.zip from Google server
+
+
+def phone_sound_8 () :
+
+    linux = wget.download("https://github.com/daviiid99/PyDroidGUI/raw/main/src/8.mp3", "src/8.mp3") #Download the platform-tools-latest-linux.zip from Google server
+
+
+def phone_sound_9 () :
+
+    linux = wget.download("https://github.com/daviiid99/PyDroidGUI/raw/main/src/9.mp3", "src/9.mp3") #Download the platform-tools-latest-linux.zip from Google server
+
+
+def phone_sound_del () :
+
+    linux = wget.download("https://github.com/daviiid99/PyDroidGUI/raw/main/src/del.mp3", "src/del.mp3") #Download the platform-tools-latest-linux.zip from Google server
+
+def phone_sounds_exists_0() :
+    exists = False
+    if os.path.exists("src/0.mp3") :
+        exists = True
+
+    else :
+        phone_sound_0()
+
+    return exists
+
+def phone_sounds_exists_1() :
+    exists = False
+    if os.path.exists("src/1.mp3") :
+        exists = True
+
+    else :
+        phone_sound_1()
+
+    return exists
+
+def phone_sounds_exists_2() :
+    exists = False
+    if os.path.exists("src/2.mp3") :
+        exists = True
+
+    else :
+        phone_sound_2()
+
+    return exists
+
+def phone_sounds_exists_3() :
+    exists = False
+    if os.path.exists("src/3.mp3") :
+        exists = True
+
+    else :
+        phone_sound_3()
+
+    return exists
+
+def phone_sounds_exists_4() :
+    exists = False
+    if os.path.exists("src/4.mp3") :
+        exists = True
+
+    else :
+        phone_sound_4()
+
+    return exists
+
+def phone_sounds_exists_5() :
+    exists = False
+    if os.path.exists("src/5.mp3") :
+        exists = True
+
+    else :
+        phone_sound_5()
+
+    return exists
+
+def phone_sounds_exists_6() :
+    exists = False
+    if os.path.exists("src/6.mp3") :
+        exists = True
+
+    else :
+        phone_sound_6()
+
+    return exists
+
+def phone_sounds_exists_7() :
+    exists = False
+    if os.path.exists("src/7.mp3") :
+        exists = True
+
+    else :
+        phone_sound_7()
+
+    return exists
+
+def phone_sounds_exists_8() :
+    exists = False
+    if os.path.exists("src/8.mp3") :
+        exists = True
+
+    else :
+        phone_sound_8()
+
+    return exists
+
+def phone_sounds_exists_9() :
+    exists = False
+    if os.path.exists("src/9.mp3") :
+        exists = True
+
+    else :
+        phone_sound_9()
+
+    return exists
+
+def phone_sounds_exists_del() :
+    exists = False
+    if os.path.exists("src/del.mp3") :
+        exists = True
+
+    else :
+        phone_sound_del()
+
+    return exists
+
 
 def check_for_updates(version) :
     message = False
@@ -172,7 +336,7 @@ def check_for_updates(version) :
         os.system("wget https://github.com/daviiid99/PyDroidGUI/raw/main/src/version.txt")
 
     else :
-        os.system("wget.exe https://github.com/daviiid99/PyDroidGUI/raw/main/src/version.txt")
+        os.system("cd src & wget.exe https://github.com/daviiid99/PyDroidGUI/raw/main/src/version.txt")
         
 
     version_str = Path('version.txt').read_text()
@@ -200,7 +364,7 @@ def latest_version() :
         os.system("wget https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/version.txt")
 
     else :
-        os.system("wget.exe https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/version.txt")
+        os.system("cd src & wget.exe https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/version.txt")
 
     version_str = Path('version.txt').read_text()
     version_str = version_str.replace('\n', '')
@@ -224,7 +388,7 @@ def latest_changelog() :
         os.system("wget https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/changelog.txt")
 
     else :
-        os.system("wget.exe https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/changelog.txt")
+        os.system("cd src & wget.exe https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/changelog.txt")
 
         
     changelog_str = Path('changelog.txt').read_text()
@@ -688,6 +852,9 @@ def dialer (lista) :
         event, values = call.read()
 
         if event == "0":
+            mixer.init()
+            mixer.music.load("src/0.mp3")
+            mixer.music.play()
             lista.append("0")
             numero = ""
 
@@ -697,6 +864,9 @@ def dialer (lista) :
             call['OUTPUT'].update(value = numero)
 
         elif event == "1":
+            mixer.init()
+            mixer.music.load("src/1.mp3")
+            mixer.music.play()
             lista.append("1")
             numero = ""
 
@@ -706,6 +876,9 @@ def dialer (lista) :
             call['OUTPUT'].update(value = numero)
 
         elif event == "2":
+                mixer.init()
+                mixer.music.load("src/2.mp3")
+                mixer.music.play()
                 lista.append("2")
                 numero = ""
 
@@ -715,6 +888,9 @@ def dialer (lista) :
                 call['OUTPUT'].update(value = numero)
 
         elif event == "3":
+                mixer.init()
+                mixer.music.load("src/3.mp3")
+                mixer.music.play()
                 lista.append("3")
                 numero = ""
 
@@ -724,6 +900,9 @@ def dialer (lista) :
                 call['OUTPUT'].update(value = numero)
 
         elif event == "4":
+                mixer.init()
+                mixer.music.load("src/4.mp3")
+                mixer.music.play()
                 lista.append("4")
                 numero = ""
 
@@ -733,6 +912,9 @@ def dialer (lista) :
                 call['OUTPUT'].update(value = numero)
 
         elif event == "5":
+                mixer.init()
+                mixer.music.load("src/5.mp3")
+                mixer.music.play()
                 lista.append("5")
                 numero = ""
 
@@ -742,6 +924,9 @@ def dialer (lista) :
                 call['OUTPUT'].update(value = numero)
 
         elif event == "6":
+                mixer.init()
+                mixer.music.load("src/6.mp3")
+                mixer.music.play()
                 lista.append("6")
                 numero = ""
 
@@ -751,6 +936,9 @@ def dialer (lista) :
                 call['OUTPUT'].update(value = numero)
 
         elif event == "7":
+                mixer.init()
+                mixer.music.load("src/7.mp3")
+                mixer.music.play()
                 lista.append("7")
                 numero = ""
 
@@ -760,6 +948,9 @@ def dialer (lista) :
                 call['OUTPUT'].update(value = numero)
 
         elif event == "8":
+                mixer.init()
+                mixer.music.load("src/8.mp3")
+                mixer.music.play()
                 lista.append("8")
                 numero = ""
 
@@ -769,6 +960,9 @@ def dialer (lista) :
                 call['OUTPUT'].update(value = numero)
 
         elif event == "9":
+                mixer.init()
+                mixer.music.load("src/9.mp3")
+                mixer.music.play()
                 lista.append("9")
                 numero = ""
 
@@ -778,6 +972,9 @@ def dialer (lista) :
                 call['OUTPUT'].update(value = numero)
 
         elif event == "+" :
+                mixer.init()
+                mixer.music.load("src/0.mp3")
+                mixer.music.play()
                 lista.append("+")
                 numero = ""
 
@@ -787,6 +984,9 @@ def dialer (lista) :
                 call['OUTPUT'].update(value = numero)
 
         elif event == "del" :
+            mixer.init()
+            mixer.music.load("src/del.mp3")
+            mixer.music.play()
             if (len(lista) == 0):
                 numero = ""
 
@@ -975,7 +1175,23 @@ if platform.system() == "Linux" :
 else :
     android_tools_exists(adb_windows, windows)
 
+# Checks for system resources
+## Background Music
 background_music_exists()
+
+
+## Dialer Sounds
+phone_sounds_exists_0()
+phone_sounds_exists_1()
+phone_sounds_exists_2()
+phone_sounds_exists_3()
+phone_sounds_exists_4()
+phone_sounds_exists_5()
+phone_sounds_exists_6()
+phone_sounds_exists_7()
+phone_sounds_exists_8()
+phone_sounds_exists_9()
+phone_sounds_exists_del()
 
 menu = [
         [sg.Image(logo_icon, background_color='#4285f4'), sg.Text("v" + version, size=(5), background_color='#4285f4')],
@@ -1014,7 +1230,7 @@ while True :
 
     window.refresh()
     mixer.init()
-    mixer.music.load("theme.mp3")
+    mixer.music.load("src/theme.mp3")
 
     
     # If the device is detected on app launch, show the control menu
@@ -1027,12 +1243,14 @@ while True :
             
 
     if event == "opt1" :
+        mixer.music.play()
         message = os.system("cd platform-tools & adb devices")
         sg.Print('ADB Devices Found\nIf your device is not found, check your USB cable \n\n', do_not_reroute_stdout=False)
         print = sg.Print
         print(device_search())
 
     elif event == "opt2" :
+        mixer.music.play()
         message = os.system("cd platform-tools & fastboot devices")
         sg.Print('Fastboot Devices Found\nIf your device is not found, check your USB cable \n\n', do_not_reroute_stdout=False)
         print = sg.Print
@@ -1064,6 +1282,7 @@ while True :
         event, values = window_update.read()
 
         if event == "Unlock Bootloader" :
+            mixer.music.play()
             os.system("cd platform-tools & fastboot flashing unlock")
             window_sucess = window_success("Success")
             event, values = window_sucess.read()
@@ -1090,7 +1309,7 @@ while True :
                 if platform.system() == "Linux" :
                     os.system("wget https://github.com/daviiid99/PyDroidGUI/raw/main/PyDroidGUI.py")
                 else :
-                    os.system("wget.exe https://github.com/daviiid99/PyDroidGUI/raw/main/PyDroidGUI.py")
+                    os.system("cd src & wget.exe https://github.com/daviiid99/PyDroidGUI/raw/main/PyDroidGUI.py")
                     
                 os.system("python3 PyDroidGUI.py")
                 window_sucess = window_success("Success")
@@ -1184,6 +1403,7 @@ while True :
             window["sms"].update(visible=False)
 
     elif event == "sms" :
+        mixer.music.play()
         window_update = show_device_notifications("Incomming Notifications")
         event, values = window_update.read()
 
@@ -1228,6 +1448,8 @@ while True :
 
     elif event == "power" :
         while event != sg.WIN_CLOSED:
+            mixer.init()
+            mixer.music.load("src/theme.mp3")
             mixer.music.play()
             window_update = window_control("Device Control")
             event, values = window_update.read()
