@@ -1227,42 +1227,50 @@ while True :
                 window_update.close()
 
     elif event == "power" :
-        mixer.music.play()
+        while event != sg.WIN_CLOSED:
+            mixer.music.play()
+            window_update = window_control("Device Control")
+            event, values = window_update.read()
 
-        window_update = window_control("Device Control")
-        event, values = window_update.read()
+            if event == "recovery" :
+                mixer.music.play()
+                os.system("cd platform-tools & adb shell reboot recovery")
+                window_update.close()
 
-        if event == "recovery" :
-            os.system("cd platform-tools & adb shell reboot recovery")
-            window_update.close()
+            elif event == "reboot" :
+                mixer.music.play()
+                os.system("cd platform-tools & adb reboot system")
+                window_update.close()
 
-        elif event == "reboot" :
-            os.system("cd platform-tools & adb reboot system")
-            window_update.close()
+            elif event == "fastboot" :
+                mixer.music.play()
+                os.system("cd platform-tools & adb shell reboot bootloader")
+                window_update.close()
 
-        elif event == "fastboot" :
-            os.system("cd platform-tools & adb shell reboot bootloader")
-            window_update.close()
+            elif event == "power" :
+                mixer.music.play()
+                os.system("cd platform-tools & adb shell reboot -p")
+                window_update.close()
 
-        elif event == "power" :
-            os.system("cd platform-tools & adb shell reboot -p")
-            window_update.close()
+            elif event == "screen" :
+                mixer.music.play()
+                take_screenshot()
+                window_update.close()
 
-        elif event == "screen" :
-            take_screenshot()
-            window_update.close()
+            elif event == "call" :
+                mixer.music.play()
+                hang_up()
+                window_update.close()
 
-        elif event == "call" :
-            hang_up()
-            window_update.close()
+            elif event == "answer" :
+                mixer.music.play()
+                lista = []
+                dialer(lista)
+                window_update.close()
 
-        elif event == "answer" :
-            lista = []
-            dialer(lista)
-            window_update.close()
-
-        elif event == sg.WIN_CLOSED:
-            window_update.close()
+            elif event == sg.WIN_CLOSED:
+                mixer.music.play()
+                window_update.close()
 
     elif event == "backup" :
         mixer.music.play()
