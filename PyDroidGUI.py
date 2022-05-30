@@ -349,6 +349,7 @@ def check_for_updates(version) :
 
     if platform.system() == "Linux" :
         os.system("wget https://github.com/daviiid99/PyDroidGUI/raw/main/src/version.txt")
+        os.system("mv version.txt src/version.txt")
 
     else :
         os.system("cd src & wget.exe https://github.com/daviiid99/PyDroidGUI/raw/main/src/version.txt")
@@ -373,10 +374,11 @@ def latest_version() :
     if platform.system() == "Linux" :
         os.system("rm -f src/version.txt")
     else :
-        os.system("del /f version.txt")
+        os.system("del /f src/version.txt")
 
     if platform.system() == "Linux" :
         os.system("wget https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/version.txt")
+        os.system("mv version.txt src/version.txt")
 
     else :
         os.system("cd src & wget.exe https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/version.txt")
@@ -394,24 +396,25 @@ def latest_version() :
 def latest_changelog() :
     # Read the version string from an external text document
     if platform.system() == "Linux" :
-        os.system("rm -f changelog.txt")
+        os.system("rm -f src/changelog.txt")
     else :
-        os.system("del /f changelog.txt")
+        os.system("del /f src/changelog.txt")
 
     
     if platform.system() == "Linux" :
         os.system("wget https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/changelog.txt")
+        os.system("mv changelog.txt src/changelog.txt")
 
     else :
         os.system("cd src & wget.exe https://raw.githubusercontent.com/daviiid99/PyDroidGUI/main/src/changelog.txt")
 
         
-    changelog_str = Path('changelog.txt').read_text()
+    changelog_str = Path('src/changelog.txt').read_text()
 
     if platform.system() == "Linux" :
-        os.system("rm -f changelog.txt")
+        os.system("rm -f src/changelog.txt")
     else :
-        os.system("del /f changelog.txt")
+        os.system("del /f src/changelog.txt")
 
     return changelog_str
 
