@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "PyDroidGUI"
-#define MyAppVersion "1.2"
+#define MyAppVersion "1.3"
 #define MyAppPublisher "daviiid99"
 #define MyAppURL "https://github.com/daviiid99"
 #define MyAppExeName "PyDroidGUI.exe"
